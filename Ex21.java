@@ -3,15 +3,16 @@ import java.util.Scanner;
 public class Ex21 {
 			
 	static int N = 6;
-	static int[] gameList = new int[] {3, 1, 7, 5, 8, 4};
+	static int[] game = new int[] {3, 1, 7, 5, 8, 4};
 	static int[][] scores = new int[N][N];
 	static char[][] moves = new char[N][N];
 
 	private static void printMatrix() {
 		
-	for (int col=1; col<=N; col++) System.out.printf("%12d", col );
+    	System.out.print("\t");	
+		for (int col=1; col<=N; col++) System.out.printf("%10d", col );
        
-    System.out.println("\n");
+    	System.out.println("\n");
 		for (int row=1; row<=N; row++) {
         	System.out.printf("%4d", row );
         	for (int col=1; col<=N; col++) { 
@@ -23,21 +24,30 @@ public class Ex21 {
 	private static int makeMatrix(int a, int b) {
 
 		if (a == b) {
-			scores[a][b] = gameList[a];
-			return gameList[a];
+			scores[a][b] = game[a];
+			return game[a];
 		} 
 		else {
-			scores[a][b] = sum(a, b) - min(makeMatrix(a + 1, b), makeMatrix(a, b - 1));
+			int left = makeMatrix(a, b - 1);
+			int down = makeMatrix(a + 1, b);
+			scores[a][b] = sum(a, b) - min(down, left);
+			scores[b][a] = scores[a][b];
+			moves[a][b] = left > down ? 'f' : 'l';
+			moves[b][a] = moves[a][b];
 		}
 		return scores[a][b];
 	}
 
 	private static int sum(int x, int y) {
-		return 1;
+		int result = 0;
+		for (int i = x; i <=y; i++) {
+			result += game[i];		
+		}
+		return result;
 	}
 
 	private static int min(int x, int y) {
-		return 1;
+		return (x > y) ? y : x;
 	}
 
 	private static void processInput() {
