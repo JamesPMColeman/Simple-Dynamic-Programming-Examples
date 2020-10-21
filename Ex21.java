@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 public class Ex21 {
 			
-	static int N = 10;
+	static int N;
 	static int[] game = new int[] {9, 2, 6, 5, 3, 1, 7, 5, 8, 4};
-	static int[][] scores = new int[N][N];
-	static char[][] moves = new char[N][N];
+	static int[][] scores;
+	static char[][] moves;
 
 	private static void printMatrix() {
 		
@@ -52,17 +52,21 @@ public class Ex21 {
 	}
 
 	private static void processInput() {
-/*
-		Scanner input = new Scanner(System.in);
-		System.out.println("Please enter the number of elements in your game.");
-		N = input.nextInt();
-		numbers = new int[N]; 
-		System.out.println("Please enter the integers of your game.");
-		String nums = input.nextLine();
-		for (int j = 0; j < N; j++) {
-			numbers[j] = Integer.parseInt(nums[j]);	
+
+		try {
+			Scanner input = new Scanner(System.in);
+			System.out.println("Please enter the number of elements in your game.");
+			N = input.nextInt();
+			for (int i = 0; i < N; i++) {
+				System.out.println("Please enter v" + i + ": ");
+				game[i] = input.nextInt();
+			}
 		}
-*/	}
+		catch (Exception e) { 
+			System.out.println("I did not like that input");
+			System.exit(1); 
+		}
+	}
 
 	public static void main(String[] args) {
 	/*	if (args.length > 0) {
@@ -81,7 +85,10 @@ public class Ex21 {
 		}
 		else processInput();
 	*/
-		makeMatrix(0, 9);
+		processInput();
+ 		scores = new int[N][N];
+		moves = new char[N][N];
+		makeMatrix(0, N - 1);
 		printMatrix();		
 	}
 }
