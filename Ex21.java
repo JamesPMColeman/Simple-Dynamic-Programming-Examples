@@ -33,7 +33,7 @@ public class Ex21 {
 			int down = makeMatrix(a + 1, b);
 			scores[a][b] = sum(a, b) - min(down, left);
 			scores[b][a] = scores[a][b];
-			moves[a][b] = left > down ? 'f' : 'l';
+			moves[a][b] = left > down ? 'F' : 'L';
 			moves[b][a] = moves[a][b];
 		}
 		return scores[a][b];
@@ -57,7 +57,7 @@ public class Ex21 {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please enter the number of elements in your game.");
 			N = input.nextInt();
-			for (int i = 0; i < N; i++) {
+			for (int i = 1; i <= N; i++) {
 				System.out.println("Please enter v" + i + ": ");
 				game[i] = input.nextInt();
 			}
