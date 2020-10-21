@@ -5,8 +5,21 @@ public class Ex21 {
 	static int N = 6;
 	static int[] gameList = new int[] {3, 1, 7, 5, 8, 4};
 	static int[][] scores = new int[N][N];
-	char[][] moves = new char[N][N];
+	static char[][] moves = new char[N][N];
 
+	private static void printMatrix() {
+		
+	for (int col=1; col<=N; col++) System.out.printf("%12d", col );
+       
+    System.out.println("\n");
+		for (int row=1; row<=N; row++) {
+        	System.out.printf("%4d", row );
+        	for (int col=1; col<=N; col++) { 
+            	System.out.printf("%8d(%2c)", scores[row-1][col-1], moves[row-1][col-1] );
+			}
+			System.out.println("\n");
+		}
+	}
 	private static int makeMatrix(int a, int b) {
 
 		if (a == b) {
@@ -16,7 +29,7 @@ public class Ex21 {
 		else {
 			scores[a][b] = sum(a, b) - min(makeMatrix(a + 1, b), makeMatrix(a, b - 1));
 		}
-		return 99;
+		return scores[a][b];
 	}
 
 	private static int sum(int x, int y) {
@@ -57,7 +70,7 @@ public class Ex21 {
 		}
 		else processInput();
 	*/
-		System.out.println(makeMatrix(0, 5));
-			
+		makeMatrix(0, 5);
+		printMatrix();		
 	}
 }
