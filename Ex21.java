@@ -59,7 +59,7 @@ public class Ex21 {
 			N = input.nextInt();
 			for (int i = 1; i <= N; i++) {
 				System.out.println("Please enter v" + i + ": ");
-				game[i] = input.nextInt();
+				game[i - 1] = input.nextInt();
 			}
 		}
 		catch (Exception e) { 
