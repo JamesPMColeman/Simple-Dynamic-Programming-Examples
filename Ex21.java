@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Ex21 {
 			
-	static int N = 6;
-	static int[] game = new int[] {3, 1, 7, 5, 8, 4};
+	static int N = 10;
+	static int[] game = new int[] {9, 2, 6, 5, 3, 1, 7, 5, 8, 4};
 	static int[][] scores = new int[N][N];
 	static char[][] moves = new char[N][N];
 
 	private static void printMatrix() {
 		
-    	System.out.print("\t");	
-		for (int col=1; col<=N; col++) System.out.printf("%10d", col );
+    	System.out.print("    ");	
+		for (int col=1; col<=N; col++) System.out.printf("%12d", col );
        
     	System.out.println("\n");
 		for (int row=1; row<=N; row++) {
@@ -25,6 +25,7 @@ public class Ex21 {
 
 		if (a == b) {
 			scores[a][b] = game[a];
+			moves[a][b] = ' ';
 			return game[a];
 		} 
 		else {
@@ -80,7 +81,7 @@ public class Ex21 {
 		}
 		else processInput();
 	*/
-		makeMatrix(0, 5);
+		makeMatrix(0, 9);
 		printMatrix();		
 	}
 }
