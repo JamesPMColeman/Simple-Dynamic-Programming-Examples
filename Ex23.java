@@ -12,8 +12,12 @@ public class Ex23 {
 		int left = 2 + matrix[x][y - 1];
 		// I get the feeling this one is unnecessary 
 		if (diagonal == up && up == left) {
-			path[x][y] = "D/U/L";
+			path[x][y] = "any";
 			return diagonal;
+		}
+		if (up == left && up < diagonal) {
+			path[x][y] = "U/L";
+			return up;
 		}
 		if (diagonal == up && up < left) {
 			path[x][y] = "D/U";
@@ -56,6 +60,21 @@ public class Ex23 {
 			matrix[x][y] = 2 * x + match(a.charAt(x), b.charAt(y)); 
 			path[x][y] = "B";
 		}
+		else if (x == a.length() && y == b.length()) {
+			if (matrix[x - 1][y - 1] <= matrix[x - 1][y] &&
+				matrix[x - 1][y - 1] <= matrix[x][y - 1]) {
+				matrix[x][y] = matrix[x - 1][y - 1];
+				path[x][y] = "D";
+			}
+			else if (matrix[x - 1][y] <= matrix[x][y - 1]) {
+				matrix[x][y] = matrix[x - 1][y];
+				path[x][y] = "U";
+			}
+			else {
+				matrix[x][y] = matrix[x][y - 1];
+				path[x][y] = "L";
+			} 
+		}
 		else {
 			matrix[x][y] = score(x, y);
 		}
@@ -69,6 +88,7 @@ public class Ex23 {
 		while (x > 0 && y > 0) {
 			String direction = path[x][y];
 			switch (direction) {
+				case "any":
 				case "D/U":
 				case "D/L":
 				case "D":
@@ -76,19 +96,23 @@ public class Ex23 {
 					y--;
 					break;
 				case "U":
-					b = b.substring(0,y) + "-" + b.substring(y, b.length());
+					b = b.substring(0,y + 1) + "-" + b.substring(y + 1, b.length());
 					x--;
 					break;
 				case "L":
-					a = a.substring(0,x) + "-" + a.substring(x, a.length());
+					a = a.substring(0,x + 1) + "-" + a.substring(x + 1, a.length());
 					y--;
 					break;
 			}
 		}
+	}
+	private static void trimAndFill() {
 		if (a.charAt(a.length() - 1) == '-' && b.charAt(b.length() - 1) == '-') {
-			a = a.substring(0, a.length() - 2);
-			b = b.substring(0, b.length() - 2);
+			a = a.substring(0, a.length() - 1);
+			b = b.substring(0, b.length() - 1);
 		}
+		while (a.length() < b.length()) a = a + "-";
+		while (a.length() > b.length()) b = b + "-";
 	}
 
 	private static boolean valid(String a, String b) {
@@ -136,6 +160,7 @@ public class Ex23 {
 		computeSequence(0, 0);
 		printMatrix();
 		traceBack();
+		trimAndFill();
 		System.out.println(a);
 		System.out.println(b);
 	}
