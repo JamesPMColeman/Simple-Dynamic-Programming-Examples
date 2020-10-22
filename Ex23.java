@@ -3,10 +3,18 @@ import java.util.Scanner;
 public class Ex23 {
 
 	private static int[][] matrix;
+	private static char[][] path;
 	private static String a, b;
 
-	private static void computeSequence() {
-		System.out.println("Here");
+	private static int match(char a, char b) {
+		if (a != b) return 1;
+		return 0;
+	}
+
+	private static void computeSequence(int x, int y) {
+		if (x == 0) matrix[x][y] = 2 * y + match(a.charAt(x), b.charAt(y)); 
+		if (y == 0) matrix[x][y] = 2 * x + match(a.charAt(x), b.charAt(y)); 
+		
 	}
 
 	private static boolean valid(String a, String b) {
@@ -30,12 +38,28 @@ public class Ex23 {
 			processInput();
 		}
 		matrix = new int[temp1.length()][temp2.length()];
+		path = new char[temp1.length()][temp2.length()];
 		a = temp1;
 		b = temp2;
 	}
 
+	private static void printMatrix() {
+		System.out.print("    ");
+        for (int col=0; col < b.length(); col++) System.out.printf("%12c", b.charAt(col) );
+
+        System.out.println("\n");
+        for (int row=1; row<=a.length(); row++) {
+            System.out.printf("%4c", a.charAt(row - 1));
+            for (int col=1; col<=b.length(); col++) {
+                System.out.printf("%8d(%2c)", matrix[row-1][col-1], path[row-1][col-1] );
+            }
+            System.out.println("\n");
+        }
+	}
+
 	public static void main(String[] args) {
 		processInput();
-		computeSequence();
+		computeSequence(0, 0);
+		printMatrix();
 	}
 }
