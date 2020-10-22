@@ -6,15 +6,32 @@ public class Ex23 {
 	private static char[][] path;
 	private static String a, b;
 
+	private static int score(int x, int y) {
+		return 1;
+	}
+
 	private static int match(char a, char b) {
 		if (a != b) return 1;
 		return 0;
 	}
 
 	private static void computeSequence(int x, int y) {
-		if (x == 0) matrix[x][y] = 2 * y + match(a.charAt(x), b.charAt(y)); 
-		if (y == 0) matrix[x][y] = 2 * x + match(a.charAt(x), b.charAt(y)); 
 		
+		if (x == 0) {
+			matrix[x][y] = 2 * y + match(a.charAt(x), b.charAt(y)); 
+			path[x][y] = 'B';
+		}
+		else if (y == 0) {
+			matrix[x][y] = 2 * x + match(a.charAt(x), b.charAt(y)); 
+			path[x][y] = 'B';
+		}
+		else {
+			System.out.println(x + ", " + y);
+			matrix[x][y] = score(x, y);
+		}
+		if (x == a.length() - 1 && y == b.length() - 1) return;
+		else if (y == b.length() - 1) computeSequence(++x, 0);
+		else computeSequence(x, ++y);	
 	}
 
 	private static boolean valid(String a, String b) {
@@ -41,6 +58,8 @@ public class Ex23 {
 		path = new char[temp1.length()][temp2.length()];
 		a = temp1;
 		b = temp2;
+		System.out.println("a length: " + a.length());
+		System.out.println("b length: " + b.length());
 	}
 
 	private static void printMatrix() {
