@@ -39,6 +39,8 @@ public class Ex23 {
 	}
 
 	private static int match(char a, char b) {
+		// TODO match by actual nucleotide matching instead of by letter
+		// ----> A == T, C == G, T == A, G == C <----
 		if (a == '-' && b != '-' || a != '-' && b == '-') return 2;
 		if (a != b) return 1;
 		return 0;
@@ -62,7 +64,31 @@ public class Ex23 {
 		else computeSequence(x, ++y);	
 	}
 	private static void traceBack() {
-		System.out.println("This is the end");
+		int x = a.length() - 1;
+		int y = b.length() - 1;
+		while (x > 0 && y > 0) {
+			String direction = path[x][y];
+			switch (direction) {
+				case "D/U":
+				case "D/L":
+				case "D":
+					x--;
+					y--;
+					break;
+				case "U":
+					b = b.substring(0,y) + "-" + b.substring(y, b.length());
+					x--;
+					break;
+				case "L":
+					a = a.substring(0,x) + "-" + a.substring(x, a.length());
+					y--;
+					break;
+			}
+		}
+		if (a.charAt(a.length() - 1) == '-' && b.charAt(b.length() - 1) == '-') {
+			a = a.substring(0, a.length() - 2);
+			b = b.substring(0, b.length() - 2);
+		}
 	}
 
 	private static boolean valid(String a, String b) {
@@ -89,8 +115,6 @@ public class Ex23 {
 		b = temp2 + "-";
 		matrix = new int[a.length()][b.length()];
 		path = new String[a.length()][b.length()];
-		System.out.println("a length: " + a.length());
-		System.out.println("b length: " + b.length());
 	}
 
 	private static void printMatrix() {
@@ -112,5 +136,7 @@ public class Ex23 {
 		computeSequence(0, 0);
 		printMatrix();
 		traceBack();
+		System.out.println(a);
+		System.out.println(b);
 	}
 }
